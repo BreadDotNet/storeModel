@@ -5,6 +5,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
 import ShopList from "./shopList"
 import OrderList from "./orderList"
+import SignUp from "./screens/SignUp"
+
 
 const BAG = require('./icons/bag.png')
 const SHOP = require('./icons/shop.png')
@@ -39,6 +41,15 @@ const RootNavigator = () => {
                         tabBarIcon: () => (
                             <Image source={BAG} style={styles.icon}/>
                         ),
+                    }}
+                />
+                <Tab.Screen
+                    name="SignUp"
+                    component={SignUp}
+                    options={{
+                        tabBarIcon: () => (
+                            <Image source={BAG} style={styles.icon}/>
+                        )
                     }}
                 />
             </Tab.Navigator>

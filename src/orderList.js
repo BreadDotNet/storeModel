@@ -1,7 +1,7 @@
 import React from "react"
 import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
-import { removeToOrder } from "./redux/actions"
+import { removeToOrder } from "./redux/action/actions"
 
 const OrderList = () => {
 

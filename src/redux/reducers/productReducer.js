@@ -1,4 +1,4 @@
-import { GET_PRODUCTS, ADD_TO_ORDER, REMOVE_TO_ORDER } from './actions'
+import { GET_PRODUCTS, ADD_TO_ORDER, REMOVE_TO_ORDER} from '../action/actionTypes'
 
 const initialState = {
     products: [],

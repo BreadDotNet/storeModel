@@ -1,7 +1,8 @@
 import React, { useEffect } from "react"
 import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
-import { getProducts, addToOrder, removeToOrder } from "./redux/actions"
+import { getProducts, addToOrder, removeToOrder } from "./redux/action/actions"
+
 
 const ShopList = () => {
 
