@@ -5,8 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
 import ShopList from "./shopList"
 import OrderList from "./orderList"
-import SignUp from "./screens/SignUp"
-
+import AuthNavigator from "./screens/AuthNavigator"
 
 const BAG = require('./icons/bag.png')
 const SHOP = require('./icons/shop.png')
@@ -37,16 +36,19 @@ const RootNavigator = () => {
                 <Tab.Screen
                     name="Order List"
                     component={OrderList}
+                    
                     options={{
                         tabBarIcon: () => (
                             <Image source={BAG} style={styles.icon}/>
                         ),
                     }}
                 />
+                
                 <Tab.Screen
-                    name="SignUp"
-                    component={SignUp}
+                    name="Autorization"
+                    component={AuthNavigator}
                     options={{
+                        headerShown: false,
                         tabBarIcon: () => (
                             <Image source={BAG} style={styles.icon}/>
                         )

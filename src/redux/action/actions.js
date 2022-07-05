@@ -12,16 +12,20 @@ const setToken = (token) => {
     AsyncStorage.setItem('token', token)
 }
 
+const getToken = () => {
+    AsyncStorage.getItem('token')
+}
+
 const deleteToken = () => {
     AsyncStorage.removeItem('token')
 }
 
-export const signUp = (user) => {
+export const signUp = (name, password) => {
     return async dispatch => {
         try {
-            const res = await axios.post(`${BASE_URl}/register`, {name: user.name, password: user.password})
+            const res = await axios.post(`${BASE_URl}/register`, {name: name, password: password})
             if (res.data) {
-                setToken(res.data.token)
+                setToken(res.data.accessToken)
                 return res.json().then((userJson) => {
                     dispatch({
                         type: AUTHENTICATED,
@@ -41,7 +45,7 @@ export const logIn = (user) => {
         try {
             const res = await axios.post(`${BASE_URl}/login`, {name: user.name, password: user.password})
             if (res.data) {
-                setToken(res.data.token)
+                setToken(res.data.accessToken)
                 return res.json().then((userJson) => {
                     dispatch({
                         type: AUTHENTICATED,
@@ -59,13 +63,13 @@ export const logIn = (user) => {
 export const logOut = () => {
     return async dispatch => {
         try {
-            const res = await axios.post(`${BASE_URl}/login`, {name: user.name, password: user.password})
-            if (res.data) {
-                setToken(res.data.token)
-                return res.json().then((userJson) => {
+            const token = getToken()
+            const res = await axios.post(`${BASE_URl}/logout`, {token: token})
+            if (res.data.user) {
+                deleteToken()
+                return res.json().then(() => {
                     dispatch({
-                        type: AUTHENTICATED,
-                        payload: userJson
+                        type: NOT_AUTHENTICATED
                     })
                 }) 
             }
@@ -79,15 +83,10 @@ export const logOut = () => {
 export const cheakAuth = () => {
     return async dispatch => {
         try {
-            const res = await axios.post(`${BASE_URl}/login`, {name: user.name, password: user.password})
-            if (res.data) {
-                setToken(res.data.token)
-                return res.json().then((userJson) => {
-                    dispatch({
-                        type: AUTHENTICATED,
-                        payload: userJson
-                    })
-                }) 
+            if (getToken()) {
+                dispatch({
+                    type: AUTHENTICATED
+                })
             }
         }
         catch (err) {
