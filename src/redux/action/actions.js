@@ -4,7 +4,7 @@ import { GET_PRODUCTS, ADD_TO_ORDER, REMOVE_TO_ORDER, AUTHENTICATED, NOT_AUTHENT
 
 const THEAME_OF_BOOK = 'quilting'
 
-const BASE_URl = 'http://localhost:3000'
+const BASE_URl = 'http://192.168.100.3:8000'
 
 
 
@@ -20,17 +20,15 @@ const deleteToken = () => {
     AsyncStorage.removeItem('token')
 }
 
-export const signUp = (name, password) => {
+export const signUp = ({name, password}) => {
     return async dispatch => {
         try {
             const res = await axios.post(`${BASE_URl}/register`, {name: name, password: password})
             if (res.data) {
                 setToken(res.data.accessToken)
-                return res.json().then((userJson) => {
-                    dispatch({
-                        type: AUTHENTICATED,
-                        payload: userJson
-                    })
+                dispatch({
+                    type: AUTHENTICATED,
+                    payload: res.data.accessToken
                 }) 
             }
         }
@@ -46,12 +44,11 @@ export const logIn = (user) => {
             const res = await axios.post(`${BASE_URl}/login`, {name: user.name, password: user.password})
             if (res.data) {
                 setToken(res.data.accessToken)
-                return res.json().then((userJson) => {
-                    dispatch({
-                        type: AUTHENTICATED,
-                        payload: userJson
-                    })
-                }) 
+                console.log(res.data.accessToken)
+                dispatch({
+                    type: AUTHENTICATED,
+                    payload: res.data.accessToken
+                })
             }
         }
         catch (err) {

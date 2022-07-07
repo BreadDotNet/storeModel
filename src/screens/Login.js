@@ -1,32 +1,15 @@
 import React, { useState } from 'react'
-import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, TextInput, Button } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Button } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import { NavigationContainer } from '@react-navigation/native'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
-
-import SignUp from './SignUp'
-import axios from 'axios'
+import { logIn } from '../redux/action/actions'
 
 const Login = ({navigation}) => {
 
-    const test = async () => {
-        try {
-            //const res = await axios.post('http://localhost:5000/login', {name: 'test123', password: '123'})
-            const res = await axios({
-                method: 'post',
-                url: 'http://localhost:8000/login',
-                data: {
-                    name: 'test123',
-                    password: '123'
-                }
-            })
-            console.log(res)
-        }
-        catch (err) {
-            console.log(err)
-        }
-        
-    }
+    const [name, setName] = useState('')
+    const [password, setPassword] = useState('')
+
+    const dispatch = useDispatch()
+    const auth = useSelector((state) => state.authReducer)
 
     return (
         <View
@@ -44,6 +27,8 @@ const Login = ({navigation}) => {
             >
                 <TextInput
                     style={styles.input}
+                    value={name}
+                    onChangeText={setName}
                     placeholder='Enter your login'
                 />
             </View>
@@ -59,6 +44,8 @@ const Login = ({navigation}) => {
             >
                 <TextInput
                     style={styles.input}
+                    value={password}
+                    onChangeText={setPassword}
                     placeholder='Enter your password'
                 />
             </View>
@@ -67,7 +54,9 @@ const Login = ({navigation}) => {
             >
                 <Button
                     title='Login'
-                    onPress={() => test(this)}
+                    onPress={() => {
+                        dispatch(logIn({name, password}))
+                    }}
                 />
             </View>
             <View

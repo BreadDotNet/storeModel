@@ -1,24 +1,9 @@
 import React, { useState } from 'react'
-import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, TextInput, Button } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Button } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { signUp } from '../redux/action/actions'
 
-import axios from 'axios'
-import { panHandlerName } from 'react-native-gesture-handler/lib/typescript/handlers/PanGestureHandler'
-
 const SignUp = ({navigation}) => {
-
-    // const test = async () => {
-    //     try {
-    //         const res = await axios.post('http://192.168.100.3:8000/login', {name: 'test123', password: '123'})
-
-    //         console.log(res.data.accessToken)
-    //     }
-    //     catch (err) {
-    //         console.log(err)
-    //     }
-        
-    // }
 
     const [name, setName] = useState('')
     const [password, setPassword] = useState('')
@@ -42,7 +27,8 @@ const SignUp = ({navigation}) => {
             >
                 <TextInput
                     style={styles.input}
-                    onChange={(text) => {setName(text)}}
+                    value={name}
+                    onChangeText={setName}
                     placeholder='Enter your login'
                 />
             </View>
@@ -58,7 +44,8 @@ const SignUp = ({navigation}) => {
             >
                 <TextInput
                     style={styles.input}
-                    onChange={(text) => {setPassword(text)}}
+                    value={password}
+                    onChangeText={setPassword}
                     placeholder='Enter your password'
                 />
             </View>
@@ -67,7 +54,9 @@ const SignUp = ({navigation}) => {
             >
                 <Button
                     title='SignUp'
-                    onPress={() => dispatch(signUp(name, password))}
+                    onPress={() => {
+                        dispatch(signUp({name, password}))
+                    }}
                 />
             </View>
             <View
